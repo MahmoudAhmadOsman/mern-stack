@@ -4,10 +4,10 @@ This project is built with Express js for the backend, React js for the front-en
 
 ### Contribute!
 
- Create a new Pull Request
+ Greate!. Create a new Pull Request
 
 
-### My social networks
+### Social Networks
 Linkedin: [https://www.linkedin.com/in/mahmoudaoman/](https://www.linkedin.com/in/mahmoudaoman/)
 
 
