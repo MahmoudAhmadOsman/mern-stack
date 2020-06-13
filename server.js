@@ -7,7 +7,7 @@ const app = express();
 //Now, intialize/or call the connection string
 connectDB();
 
-//Users Middleware
+//Users' Middleware
 app.use(express.json());
 // app.use(express.json({ extend: false }));
 
