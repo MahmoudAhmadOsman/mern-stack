@@ -44,7 +44,7 @@ router.post(
           .json({ errors: [{ msg: "User already exists in the database" }] });
       }
 
-      // Get Users Gravatar from their email and setup the size of the avatar size
+      // Get Users Gravatar from their email and setup the size of the avatar to 180
       const avatar = gravatar.url(email, {
         s: "180",
         r: "pg",
