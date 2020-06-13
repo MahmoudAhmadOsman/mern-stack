@@ -1,10 +1,15 @@
 const express = require("express");
+
 //Bring db connection file
 const connectDB = require("./config/db");
 const app = express();
 
 //Now, intialize/or call the connection string
 connectDB();
+
+//Users Middleware
+app.use(express.json());
+// app.use(express.json({ extend: false }));
 
 //Home page or Landing page
 app.get("/", function (req, res) {

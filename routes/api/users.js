@@ -1,11 +1,83 @@
 const express = require("express");
+const gravatar = require("gravatar");
+const bcrypt = require("bcryptjs");
+
 const router = express.Router();
+const { check, validationResult } = require("express-validator");
+// Bring the model
+const User = require("../../models/User");
 
 // @route    POST api/users
-// @desc     users route
+// @desc     Register new users
 // @access   Public
-router.get("/", (req, res) => {
-  res.send("Users Route");
-});
+//1. validation 1st
+router.post(
+  "/",
+  [
+    check("name", "Name is required!").not().isEmpty(),
+    check("email", "A valid email is required!").isEmail(),
+    check("password", "Enter password with 8 or more characters!").isLength({
+      min: 8,
+    }),
+  ],
+  async (req, res) => {
+    //console.log(req.body);
+    //2. set error 2nd
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      //Display error using array() method
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Destructure the request instead of saying req.name.body etc
+    const { name, email, password } = req.body;
+    try {
+      // Check if th user exists in the database
+      let user = await User.findOne({
+        email,
+      });
+
+      //If user exists
+      if (user) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "User already exists in the database" }] });
+      }
+
+      // Get Users Gravatar from their email and setup the size of the avatar size
+      const avatar = gravatar.url(email, {
+        s: "180",
+        r: "pg",
+        d: "mm",
+      });
+
+      // Now, create instance of user or create new USER
+      user = new User({
+        name,
+        email,
+        avatar,
+        password,
+      });
+
+      //Encrypt password before inserting it to the database
+
+      //1st create salt
+      const salt = await bcrypt.genSalt(10);
+
+      // Now hash the password after creating salt
+      user.password = await bcrypt.hash(password, salt);
+
+      //Now save the user into the database using save () function
+      await user.save();
+
+      // Finally, Return jsonwebtoken
+
+      res.send("Users registered");
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
 
 module.exports = router;
