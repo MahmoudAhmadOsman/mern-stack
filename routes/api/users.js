@@ -1,6 +1,8 @@
 const express = require("express");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
@@ -8,9 +10,9 @@ const { check, validationResult } = require("express-validator");
 const User = require("../../models/User");
 
 // @route    POST api/users
-// @desc     Register new users
+// @desc     User Registeration
 // @access   Public
-//1. validation 1st
+//1. validate user's name, email and password before inserting to the database
 router.post(
   "/",
   [
@@ -70,9 +72,38 @@ router.post(
       //Now save the user into the database using save () function
       await user.save();
 
+      /*
+  ========================
+    Start of jwt
+  ========================
+  */
       // Finally, Return jsonwebtoken
 
-      res.send("Users registered");
+      //res.send("Users registered");
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+      //Then use sign (pram1 , pram2) function which expects 2 params
+
+      // Bring the config that holds the jwt secret value
+      jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        {
+          expiresIn: 38000,
+        },
+        (error, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
+      /*
+========================
+  End of jwt
+========================
+*/
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Internal Server Error");
