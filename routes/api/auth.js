@@ -7,6 +7,8 @@ const User = require("../../models/User");
 // @route    POST api/auth
 // @desc     Register new user
 // @access   Public
+
+//            auth.js inside the route/api
 router.get("/", auth, async (req, res) => {
   //res.send("Auth Route");
   //Now, return some data from the database by making a call to the database
