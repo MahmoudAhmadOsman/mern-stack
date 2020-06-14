@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
   //1st, get the token from the header fromt the request object
   const token = req.header("z-auth-token");
 
-  //2ND, check if there is not token
+  //2ND, check if there is no token
   if (!token) {
     return res
       .status(401)
