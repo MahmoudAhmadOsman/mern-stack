@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-//To user the auth middleware, bring it to the route you want to protect and add as a 2nd prameter to the route
+//To use the auth middleware, bring it to the route you want to protect and add as a 2nd prameter to the route
 const auth = require("../../middleware/auth");
 const User = require("../../models/User");
 
