@@ -8,8 +8,8 @@ const app = express();
 connectDB();
 
 //Users' Middleware
-app.use(express.json());
-// app.use(express.json({ extend: false }));
+app.use(express.json()); // Enable later
+//app.use(express.json({ extended: false }));
 
 //Home page or Landing page
 app.get("/", function (req, res) {

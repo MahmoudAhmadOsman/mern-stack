@@ -1,16 +1,16 @@
 const express = require("express");
+const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
-const router = express.Router();
 const { check, validationResult } = require("express-validator");
 // Bring the model
 const User = require("../../models/User");
 
 // @route    POST api/users
-// @desc     User Registeration
+// @desc     User Registeration route
 // @access   Public
 //1. validate user's name, email and password before inserting to the database
 router.post(
@@ -106,7 +106,7 @@ router.post(
 */
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("Internal Server Error!!!");
     }
   }
 );

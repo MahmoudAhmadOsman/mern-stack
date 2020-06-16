@@ -4,25 +4,31 @@ const config = require("config");
 
 module.exports = function (req, res, next) {
   //1st, get the token from the header fromt the request object
-  const token = req.header("z-auth-token");
 
-  //2ND, check if there is no token
+  const token = req.header("x-auth-token");
+
+  //2ND, check if there is no token found
   if (!token) {
-    return res
-      .status(401)
-      .json({ msg: "No token found, authorization DENIED!" });
+    return res.status(401).json({
+      msg: "No token found, authorization DENIED!",
+    });
   }
 
   //3RD, Verify the token if there is a token
   try {
-    // This will decode the token
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
-    //Now get the request and assign it to the user
-    req.user = decoded.user;
-    //Now call the next function
-    next();
+    jwt.verify(token, config.get("jwtSecret"), (error, decoded) => {
+      if (error) {
+        return res.status(401).json({
+          msg: "Token is not valid",
+        });
+      } else {
+        //Now get the request and assign it to the user
+        req.user = decoded.user;
+        next();
+      }
+    });
   } catch (err) {
-    console.error("Oops, middleware auth failed!");
-    res.status(500).json({ msg: "Internal server error, jwt token failed" });
+    console.error("Internal server error, jwt token failed");
+    res.status(500).json({ msg: "Server Error" });
   }
 };
