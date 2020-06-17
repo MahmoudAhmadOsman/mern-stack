@@ -10,7 +10,7 @@ module.exports = function (req, res, next) {
   //2ND, check if there is no token found
   if (!token) {
     return res.status(401).json({
-      msg: "No token found, authorization DENIED!",
+      msg: "No token found, authorization denied! (middleware)",
     });
   }
 

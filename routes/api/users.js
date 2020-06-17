@@ -33,13 +33,13 @@ router.post(
 
     // Destructure the request instead of saying req.name.body etc
     const { name, email, password } = req.body;
+
     try {
       // Check if th user exists in the database
-      let user = await User.findOne({
-        email,
-      });
+      let user = await User.findOne({ email });
 
       //If user exists
+
       if (user) {
         return res
           .status(400)
@@ -94,21 +94,16 @@ router.post(
         {
           expiresIn: 38000,
         },
-        (error, token) => {
+        (err, token) => {
           if (err) throw err;
           res.json({ token });
         }
       );
-      /*
-========================
-  End of jwt
-========================
-*/
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Internal Server Error!!!");
     }
-  }
-);
+  } // End of bracket of the post function
+); //End of post() parenthesis
 
 module.exports = router;

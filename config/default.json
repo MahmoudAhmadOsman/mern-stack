@@ -1,4 +1,4 @@
 {
   "mongoURI": "mongodb+srv://atlasbookshop:atlasbookshop2020@cluster0-xtbzt.mongodb.net/atlasbookshop?retryWrites=true&w=majority",
-  "jwtSecret": "secrettoken"
+  "jwtSecret": "Secrettoken"
 }
