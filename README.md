@@ -1,5 +1,5 @@
 ### MERN Stack Project
-This project is built with Express js for the backend, React js for the front-end, Bootstrap for styling and JWT for user login authentication and MongoDB for database.
+I built this project with Expressjs  and Nodejsfor the backend, Reactjs for the front-end, Bootstrap for styling and JWT for user login authentication and MongoDB for database.
 
 
 
